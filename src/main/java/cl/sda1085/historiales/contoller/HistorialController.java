@@ -82,9 +82,10 @@ public class HistorialController {
     }
 
     //Contar cuántas veces se ha afectado una entidad específica
-    @GetMapping("/conteo/{entidad}/{idEntidad}")
-    public ResponseEntity<Long> contarAccionesEntidad(@PathVariable String entidad, @PathVariable Long idEntidad) {
-        return ResponseEntity.ok(historialService.contarAccionesEntidad(entidad, idEntidad));
+    @GetMapping("/conteo")
+    public ResponseEntity<Long> contarAccionesEntidad(
+            @RequestParam String entidad_afectada, @RequestParam Long idEntidad) {
+        return ResponseEntity.ok(historialService.contarAccionesEntidad(entidad_afectada, idEntidad));
     }
 
     //Verificar si un usuario ha realizado alguna acción en el sistema
@@ -94,9 +95,11 @@ public class HistorialController {
     }
 
     //Obtener la última acción registrada para una entidad específica
-    @GetMapping("/ultima/{entidad}/{idEntidad}")
-    public ResponseEntity<HistorialResponseDTO> obtenerUltimaAccion(@PathVariable String entidad, @PathVariable Long idEntidad) {
-        return historialService.obtenerUltimaAccion(entidad, idEntidad)
+    @GetMapping("/ultima/{entidad_afectada}/{idEntidad}")
+    public ResponseEntity<HistorialResponseDTO> obtenerUltimaAccion(
+            @PathVariable String entidad_afectada, @PathVariable Long idEntidad) {
+
+        return historialService.obtenerUltimaAccion(entidad_afectada, idEntidad)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
